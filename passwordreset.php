@@ -1,43 +1,57 @@
 <?php
-require_once 'templates/page_setup.php';
-$title = "Password Reset";
-$page_name = "passwordreset";
+require_once "templates/page_setup.php";
+$page_name = "forgot_pass";
+include "templates/header.php";
+include "templates/jumbotron.php";
+?>
 
-  if(isset($_POST['reset_pass_form'])){
-    $email = $_SESSION['email'];
-    $password="";
-    $confirmpassword="";
-    if(isset($_POST['newpassword']))        $password = strip_tags(filter_var(($_POST['newpassword']),FILTER_SANITIZE_STRING));
-    if(isset($_POST['confirmpassword']))   $confirmpassword = strip_tags(filter_var($_POST['confirmpassword'],FILTER_SANITIZE_STRING));
-    $hash = $_POST['q'];
-    $resetkey = $_SESSION['randkey'];
-    if($resetkey == $hash){
-      if($password == $confirmpassword){
-        $newpwhash = password_hash($password);
-        User::resetUserPassword($email,$newpwhash);
-        //update user entry
-        header("location: https://$host$uri/index.php");
-      }
-    }
+
+<?php
+  if (isset($_GET['key']) && $_GET['key'] != $_SESSION['token']){
+	echo '<h2 align="center">You arrived here by accident, please return to <a href="index.php">home page</a>.</h2>';
+	include 'templates/footer.php';
+	die();
   }
-  include 'templates/header.php';
-  include 'templates/jumbotron.php';
-?>
 
-</head>
-<body>
-  <div class="contents">
-
-<?php echo '
-  <form action "passwordreset.php" method = "post">
-    New Password: <input type = "password" name = "newpassword"><br>
-    Confirm Password: <input type = "password" name = "confirmpassword"><br>
-    <input type = "hidden" name = "q" value = "';
-    if(isset($_GET['q'])){
-      echo $_GET['q'];
+  function resetUserPassword($email, $newpwhash){
+    $input = fopen('lib/users.csv', 'r') or die ("Can't open file");
+    $output = fopen('lib/temp.csv', 'w+');
+    while(!feof($input)){
+		$line = fgets($input, 2048);
+		$data = str_getcsv($line, ",");
+        if(isset($data[3]) and $data[3] == $email){
+          $data[1] = $newpwhash;
+        }
+      fputcsv($output,$data,",");
     }
-    echo '" ><input type = "submit" name = "reset_pass_form" value = "Reset Password">
-  </form>';
+    fclose($input);
+    fclose($output);
+    unlink('lib/users.csv');
+    rename('lib/temp.csv','lib/users.csv');
+  }
 ?>
-  </div>
-<?php include 'templates/footer.php';?>
+
+
+
+<div class="contents">
+	<?php
+      if (isset($_POST['new']) && isset($_POST['confirm'])){
+	    if ($_POST['new'] != $_POST['confirm']){
+			echo '<h2 align="center">The entered passwords are not the same</h2>';
+		}
+		else{
+			$new_pass = password_hash(strip_tags($_POST['new']), PASSWORD_BCRYPT);
+			$email = $_SESSION['email'];
+			resetUserPassword($email, $new_pass);
+			echo '<h2 align="center">Password changed! <a href="login.php">Login</a></h2>';
+		}
+      }
+    ?>
+	  <form action="#" method="post">
+        New Password: <input type="password" name="new"><br/><br/>
+	    Confirm Password: <input type="password" name="confirm"><br/><br/>
+	    <input type="submit" value="Submit">
+      </form>
+</div>
+
+<?php require 'templates/footer.php';?>

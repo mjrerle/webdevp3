@@ -49,7 +49,7 @@ if(isset($stm)){
 <?php
 if(isset($_SESSION['valid'])){
 ?>
-        <a href="forgot_password1.php">Forgot password? Click here to reset.</a><br>
+        <a href="forgot_password.php">Forgot password? Click here to reset.</a><br>
 <?php
 }
 ?>
