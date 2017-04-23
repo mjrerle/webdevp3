@@ -3,15 +3,15 @@
  * Defines configuration variables for our site
  */
 class config{
-  public $url_local  = '/s/bach/g/under/mjrerle/public_html/p2';
-  public $url_public = '/~mjrerle/p2';
+  public $url_local  = '/s/bach/g/under/mjrerle/public_html/p3';
+  public $url_public = '/~mjrerle/p3';
   public $base_url = '';  /* Selected below based upon server */
-  public $site_name = "CT 310: Project 2 with mjrerle and tjnolan";
+  public $site_name = "CT 310: Project 2 with mjrerle and ghatch";
   public $site_lmod = "3/19/17 6:00PM";
   public $matience = false;
   public $session_name = "p2_with_mjrerle_and_tjnolan";
-  public $up_local     = '/s/bach/g/under/mjrerle/public_html/p2/assets/img/';
-  public $up_public    = '/s/bach/g/under/mjrerle/public_html/p2/assets/img/';
+  public $up_local     = '/s/bach/g/under/mjrerle/public_html/p3/assets/img/';
+  public $up_public    = '/s/bach/g/under/mjrerle/public_html/p3/assets/img/';
   public $upload_dir   = ''; /* Selected below based upon server */
   public $pad_length   = 6;
 }

@@ -31,8 +31,11 @@ function createTableIngredient(){
   $sql = "CREATE TABLE ingredient (
             id INTEGER PRIMARY KEY ASC,
             i_name varchar(50),
+            unit varchar(10),
             price decimal(10,2),
-            description varchar(255),
+            description varchar(50),
+            longdescription varchar(500),
+            time varchar(50),
             imgURL varchar(255))";
   createTableGeneric($sql);
 }
@@ -48,7 +51,7 @@ function createTableComment(){
 }
 function createTableImage(){
   $sql = "CREATE TABLE images(
-          id INTEGER PRIMARY KEY ASC,
+          img_id INTEGER PRIMARY KEY ASC,
           name varchar(255),
           type varchar(255),
           size int(10),
@@ -72,7 +75,7 @@ function loadProductsIntoEmptyDatabase(){
   require_once "data/list.php";
   $ingredients = getIngredientsFromFile();
   $comments = getCommentsFromFile();
-  $sql_ingredient = "INSERT INTO ingredient(i_name, price, description, imgURL, id) VALUES (:name, :price, :description, :imgURL, :id)";
+  $sql_ingredient = "INSERT INTO ingredient(i_name, unit, price, description, longdescription, time, imgURL, id) VALUES (:name, :unit,:price, :description, :longdescription, :time,:imgURL, :id)";
   $sql_comment = "INSERT INTO comment(c_name, rating, words, ingredient_name, id) VALUES(:name, :rating, :words, :ingredient_name, :id)";
   $ing_stm = $dbh->prepare($sql_ingredient);
   $com_stm = $dbh->prepare($sql_comment);
@@ -88,8 +91,11 @@ function testedInsertIngredient($ingredient, $stmt){
   global $dbh;
   if(!$stmt->execute(array(
     ':name'=>$ingredient['Name'],
+    ':unit'=>$ingredient['Unit'],
     ':price'=>$ingredient['Price'],
     ':description'=>$ingredient['Description'],
+    ':longdescription'=>$ingredient['Long_Description'],
+    ':time'=>$ingredient['Time'],
     ':imgURL'=>$ingredient['IMGURL'],
     ':id'=>$ingredient['ID']
     ))){

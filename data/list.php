@@ -31,7 +31,7 @@ function addIngredientToTable($ingredient){
   $ingredients = getIngredientsFromFile();
   for($i=0; $i<count($ingredients);$i++)  if($ingredients[$i]["Name"] == $ingredient->name) $ingredientExists = true;
   if(!$ingredientExists){
-    array_push($ingredients,array('Name'=>$ingredient->name, 'Price'=>$ingredient->price, 'Description'=>$ingredient->description, 'IMGURL'=>$ingredient->imgURL, 'ID'=>$ingredient->id));
+    array_push($ingredients,array('Name'=>$ingredient->name, 'Unit'=>$ingredient->unit, 'Price'=>$ingredient->price, 'Description'=>$ingredient->description, 'Long_Description'=>$ingredient->longdescription,'Time'=>$ingredient->time, 'IMGURL'=>$ingredient->imgURL, 'ID'=>$ingredient->id));
     writeIngredients($ingredients);
     return true;
   }
@@ -43,8 +43,11 @@ function updateIngredientFile($ing){
   for($i=0;$i<count($ingredients);$i++){
     if($ingredients[$i]["ID"] == $ing->id){
       $ingredients[$i]["Name"] = $ing->name;
+      $ingredients[$i]["Unit"]= $ing->unit;
       $ingredients[$i]["Price"] = $ing->price;
       $ingredients[$i]["Description"] = $ing->description;
+      $ingredients[$i]["Long_Description"] = $ing->longdescription;
+      $ingredients[$i]["Time"] = $ing->time;
       $ingredients[$i]["IMGURL"] = $ing->imgURL;
     }
   }

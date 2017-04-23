@@ -45,7 +45,6 @@ if ($_FILES && isset ( $_FILES ["image"] )) {
         // Let database save assign unique integer id.
 
         $fid = $db->saveImage ( $_FILES ["image"], $ext );
-        if($db->getImage($fid)) $fid+=1;
         if ($fid == - 1) {
           $error_msg = "Unable to store image in DB";
         } else {
@@ -55,6 +54,7 @@ if ($_FILES && isset ( $_FILES ["image"] )) {
             }
           }
           $filename = str_pad ( $fid, $config->pad_length, "0", STR_PAD_LEFT ) . "." . $ext;
+
           move_uploaded_file ( $_FILES ["image"] ["tmp_name"], $config->upload_dir . $filename );
 
           chmod('assets/img/'.$filename, 0755);
@@ -68,7 +68,7 @@ if ($_FILES && isset ( $_FILES ["image"] )) {
   }
 }
 
-if(!empty($_POST['name']) or !empty($_POST['price']) or !empty($_POST['description'])){
+if(!empty($_POST['name']) or !empty($_POST['unit']) or !empty($_POST['price']) or !empty($_POST['description'])){
   require_once 'data/list.php';
   $ing = new Ingredient();
   if(!empty($_POST['name'])){
@@ -76,6 +76,12 @@ if(!empty($_POST['name']) or !empty($_POST['price']) or !empty($_POST['descripti
   }
   else{
     $ing->name = $ingredient->name;
+  }
+  if(!empty($_POST['unit'])){
+    $ing->unit = strip_tags($_POST['unit']);
+  }
+  else{
+    $ing->unit = $ingredient->unit;
   }
   if($idFound==true){
     $ing->id = $id;
@@ -149,6 +155,9 @@ include 'templates/jumbotron.php';
 if($idFound==true){
   echo "Editing ".$ingredient->name;
 }
+else {
+  echo "Adding new ingredient";
+}
 ?>
 			<div class="row main">
 				<div class="main-login main-center">
@@ -159,6 +168,16 @@ if($idFound==true){
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
                   <input type="text" class="form-control" name="name" id="name"  placeholder="<?php if(isset($ingredient))echo $ingredient->name;?>"/>
+								</div>
+							</div>
+						</div><br>
+
+        <div class="form-group">
+						<label for="unit" class="cols-sm-2 control-label">Unit</label>
+							<div class="cols-sm-8">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                  <input type="text" class="form-control" name="unit" id="unit"  placeholder="<?php if(isset($ingredient))echo $ingredient->unit;?>"/>
 								</div>
 							</div>
 						</div><br>

@@ -31,6 +31,7 @@ foreach($ingredients as $i){
   $reviewCount = $dbh->getNumberOfCommentsForIngredient($i);
   $name = $i->name;
   $description = $i->description;
+  $unit = $i->unit;
   $rating = $dbh->averageRating($i);
   $stars = $dbh->getRatingStars($rating);
   echo '<div class = "col-sm-3 col-md-3 col-xs-3 product-listing">
@@ -39,7 +40,7 @@ foreach($ingredients as $i){
               <img src="assets/img/'.$imageURL.'" alt="thumbnail">
             </a>
             <div class = "caption">
-              <h4 class = "pull-right">$'.$price.'</h4>
+              <h4 class = "pull-right">$'.$price.' per '.$unit.'</h4>
               <h4><a href="'.$detailsURL.'">'.$name.'</a>
               </h4>
               <p>'.$description.'</a></p>

@@ -4,6 +4,6 @@ header("Access-Control-Allow-Origin: *");
 
 $a= array();
 $i =0;
-$a[$i++] = array('status'=>'closed');
+$a[$i++] = array('status'=>'open');
 echo json_encode($a);
 ?>

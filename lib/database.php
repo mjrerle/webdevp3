@@ -122,7 +122,7 @@ class Database extends PDO {
 	}
 	function searchForResults($query_term) {
 		$query_term = SQLite3::escapeString ( $query_term );
-		$sql = "SELECT i_name, id, price, description, imgURL FROM ingredient
+		$sql = "SELECT i_name, unit, id, price, description, longdescription, time, imgURL FROM ingredient
           WHERE (i_name LIKE '%$query_term%')";
 		$result = $this->query ( $sql );
 		if ($result === FALSE) {
@@ -155,12 +155,15 @@ class Database extends PDO {
 		return Comment::getCommentFromRow ( $result->fetch () );
 	}
 	function updateIngredient($ingredient) {
-		$sql = "UPDATE ingredient SET i_name= :ingredient_name, price=:ingredient_price, description = :ingredient_description, imgURL = :ingredient_imgURL WHERE id = $ingredient->id";
+		$sql = "UPDATE ingredient SET i_name= :ingredient_name, unit = :unit, price=:ingredient_price, description = :ingredient_description, longdescription=:longdescription, time=:time, imgURL = :ingredient_imgURL WHERE id = $ingredient->id";
 		$stm = $this->prepare ( $sql );
 		return $stm->execute ( array (
       ":ingredient_name" => $ingredient->name,
+      ":unit" =>$ingredient->unit,
         ":ingredient_price" => $ingredient->price,
         ":ingredient_description" => $ingredient->description,
+        ":longdescription"=>$ingredient->longdescription,
+        ":time"=>$ingredient->time,
         ":ingredient_imgURL" => $ingredient->imgURL
 		) );
 	}
@@ -212,13 +215,16 @@ class Database extends PDO {
     ));
   }
   function insertIngredient($ingredient){
-    $sql = "INSERT INTO ingredient (i_name, price, description, imgURL, id)
-            VALUES (:i_name, :price, :description, :imgURL, :id)";
+    $sql = "INSERT INTO ingredient (i_name, unit, price, description, longdescription, time,imgURL, id)
+            VALUES (:i_name, :unit, :price, :description, :longdescription, :time, :imgURL, :id)";
     $stm = $this->prepare($sql);
     return $stm->execute(array(
       ":i_name" => $ingredient->name,
+      ":unit"=> $ingredient->unit,
       ":price" => $ingredient->price,
       ":description" => $ingredient->description,
+      ":longdescription"=>$ingredient->longdescription,
+      ":time"=>$ingredient->time,
       ":imgURL" => $ingredient->imgURL,
       ":id" => $ingredient->id
     ));
@@ -240,11 +246,11 @@ class Database extends PDO {
     if($stm->execute($values) === FALSE){
       return -1;
     }else{
-      return $this->lastInsertId("id");
+      return $this->lastInsertId("img_id");
     }
   }
   public function deleteImage($id){
-    $sql = "DELETE FROM images WHERE id LIKE %$id%";
+    $sql = "DELETE FROM images WHERE img_id LIKE %$id%";
  		if ($this->exec ( $sql ) === FALSE) {
 			echo '<pre class="bg-danger">';
 			print_r ( $this->errorInfo () );
@@ -260,7 +266,7 @@ class Database extends PDO {
   }
 
   public function getImage($id){
-    $sql = "SELECT * FROM images WHERE id ='$id'";
+    $sql = "SELECT * FROM images WHERE img_id LIKE %$id%";
     return $this->query($sql)->fetch();
   }
 

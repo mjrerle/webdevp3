@@ -1,7 +1,4 @@
-Name,Price,Description,IMGURL,ID
-Salt,2.44,Salty.,000002.jpg,1
-Sugar,3.66,Sweet,000003.jpg,2
-Flour,9.88,Baking,000004.jpg,3
-Caraway,3.79,"Exotic spices",000005.jpg,4
-Tomatillo,2.98,"Not tomatoes",000006.jpg,5
-Zucchini,3.5,"Is it a cucumber",000007.jpg,6
+Name,Unit,Price,Description,Long_Description,Time,IMGURL,ID
+Salt,lb,2.77,Salty,"Put it on anything to make it taste better!","Ships today",salt.jpg,1
+Sugar,lb,2.33,Sweet,"The ancients found many uses for sugar including topping lavish meals","Ships today",sugar.jpg,2
+Eggs,dozen,1.99,Breakfast!,"Start your day with some EGGS!","Ships weekly",eggs.jpg,3

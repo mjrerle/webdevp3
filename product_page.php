@@ -39,7 +39,7 @@ if (isset($_SESSION['status'])){
  <?php if (isset($_SESSION['username']) and $_SESSION['username']!="Guest"): //adds a cart option if user is signed in ?>
 	  <h4><a href="cart.php<?php echo "?action=cart&id=$productID";?>">Add to Cart</a></h4>
 	  <?php endif;?>
-      <h4>$<?php echo $ingredient->price;?></h4>
+      <h4>$<?php echo $ingredient->price." per ".$ingredient->unit;?></h4>
     </div>
     <div class = "col-md-3" id=productPurchaseCol>
     </div>
