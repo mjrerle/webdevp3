@@ -26,8 +26,8 @@ function getStatus(lst){
     url = url + "ajax_status.php";
 
     jQuery.post(url,function(data,status){
-            if(typeof data[0].status !== undefined){
-              if(data[0].status == "open"){
+            if(typeof data.status !== undefined){
+              if(data.status == "open"){
                 getIngs(lst.baseURL);
               }
             }
@@ -40,6 +40,8 @@ function getIngs(baseurl){
   var url = baseurl + "ajax_listing.php";
   $.post(url,function(data,status){
         var x = JSON.parse(data);
+
+        $("#debug").append(baseurl);
         ingredients.push(x);
         fillData(ingredients,baseurl);
     });
@@ -49,8 +51,8 @@ function fillData(ings,base){
 	var rt = "";
 	var tab = document.getElementById("ingredients");
 	var i = tab.rows.length;
-  ings = Array.from(new Set(ings));
 	var len = ings.length;
+  $("#debug2").append(len);
 	for (j = 0; j < len; j++) {
     var y = ings[j];
 		rt  = "<tr><td class = \"" +y[j].name+"row\" id=\"" + y[j].name + "_row\" style=\"padding: 1%\">";
