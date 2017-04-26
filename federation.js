@@ -44,11 +44,11 @@ function getStatus(lst){
             
             if(data.status == "closed" || data.status == "open" || data.status==""){
                 getStatusColor(rowClass, data.status);
-                jQuery(statCol).html(data.status + ": encoded without an array");
+                jQuery(statCol).html(data.status);
             }
             else if (data[0].status == "closed" || data[0].status == "open" || data[0].status == ""){
                 getStatusColor(rowClass, data[0].status);        
-                jQuery(statCol).html(data[0].status);
+                jQuery(statCol).html(data[0].status+ ": encoded with an array");
             }
             
             else{
