@@ -39,6 +39,15 @@ class Database extends PDO {
     }
     return Ingredient::getIngredientFromRow($result->fetch());
   }
+function getIngredientbyName($id){
+    $sql = "SELECT * FROM ingredient WHERE i_name LIKE '%$id%'";
+    $result = $this->query($sql);
+    if($result===false){
+      print_r($this->errorInfo());
+      return array();
+    }
+    return $result->fetch();
+  }
 	function getComments() {
 		$sql = "SELECT * FROM comment";
 		$result = $this->query ( $sql );
