@@ -1,4 +1,3 @@
-var burl;
 $(document).ready(function() {
 	var jqxhr = $.post("https://www.cs.colostate.edu/~ct310/yr2017sp/more_assignments/project03masterlist.php", function(data, status) {
 		parseData(data);
@@ -22,7 +21,6 @@ function parseData(lst) {
 
 function getStatus(lst){
     var url = lst.baseURL;
-    burl = url;
     url = url + "ajax_status.php";
 
     jQuery.post(url,function(data,status){
@@ -38,13 +36,14 @@ function getStatus(lst){
 
 function getIngs(baseurl){
   var url = baseurl + "ajax_listing.php";
-  $.post(url,function(data,status){
-        var x = JSON.parse(data);
+  if(url != "ajax_listing.php"){
+    $.post(url,function(data,status){
+      $("#debug").append();
 
-        $("#debug").append(baseurl);
-        ingredients.push(x);
-        fillData(ingredients,baseurl);
-    });
+      ingredients.push(data);
+      fillData(ingredients,baseurl);
+  });
+  }
 }
 
 function fillData(ings,base){
@@ -52,7 +51,6 @@ function fillData(ings,base){
 	var tab = document.getElementById("ingredients");
 	var i = tab.rows.length;
 	var len = ings.length;
-  $("#debug2").append(len);
 	for (j = 0; j < len; j++) {
     var y = ings[j];
 		rt  = "<tr><td class = \"" +y[j].name+"row\" id=\"" + y[j].name + "_row\" style=\"padding: 1%\">";
