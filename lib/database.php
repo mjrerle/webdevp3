@@ -278,6 +278,10 @@ function getIngredientbyName($id){
     $sql = "SELECT * FROM images WHERE img_id LIKE %$id%";
     return $this->query($sql)->fetch();
   }
+  public function getImageByName($id){
+    $sql = "SELECT * FROM images WHERE name LIKE %$id%";
+    return $this->query($sql)->fetch();
+  }
 
 
 }
