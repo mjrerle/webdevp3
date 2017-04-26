@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 <?php
 include "templates/page_setup.php";
 header('Content-Type: text/json');
@@ -12,4 +10,3 @@ if (isset($_GET['ing'])){
  echo json_encode($ingarray);
  }
 ?>
->>>>>>> 56fb0888ef3c07ac515cba6686f05547dda96096
