@@ -1,4 +1,6 @@
 <?php
+header('Content-Type: text/json');
+header("Access-Control-Allow-Origin: *");
 include "templates/page_setup.php";
 require_once "create.php";
 if(!$dbh=setupProductConnection()) die;
@@ -8,8 +10,8 @@ dropTableByName("images");
 createTableIngredient();
 createTableImage();
 createTableComment();
-$db = new Database();
 loadProductsIntoEmptyDatabase();
+$db = new Database();
 $ingredients = $db->getIngredients();
 $count = $db->getNumberOfIngredients();
 $array = array();
