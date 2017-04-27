@@ -87,7 +87,7 @@ include 'templates/header.php';
         </div>
         <div class="col-md-4 featurette">
             <div class="featurette-image">
-                <img class="img-rounded" src="assets/img/tomato-1205699_1280.jpg" alt="image">
+                <img class="img-rounded" src="assets/img/tomato.jpg" alt="image">
             </div>
             <h3>Five-Star Quality</h3>
             <p class="featurette-text">
