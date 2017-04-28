@@ -58,11 +58,10 @@ function fillData(ings,base,nameShort){
 
 	for (j = z; j < len; j++) {
     var y = ings[j];
-  $("#debug").append(len + " "+y.name + " "+base+" "+nameShort+"<br>");
     details = '<div class = "col-sm-3 col-md-3 col-xs-3 product-listing">';
     details += '<div class="thumbnail">';
-    details += "<a href=\"food_page.php?ing="+y.name+"\">";
-    details += "<img id = \""+nameShort+"_"+y.name+"\" src = \"\" alt = \"thumbnail\">";
+    details += "<a href=\"food_page.php?ing="+y.name+"&team="+nameShort+"\">";
+    details += "<img id = \""+nameShort+"_"+y.name+"\" src = \"\" alt = \"thumbnail\" style = \"height:200px;width:200px;\">";
     details += "</a>";
     details += "<div class= \"caption\">";
     details += "<h4 class = \"pull-right\">$"+y.cost+" per "+y.unit +"</h4>";
