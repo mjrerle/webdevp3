@@ -11,7 +11,7 @@ if(isset($_POST['username']) and isset($_POST['password'])){
     $_SESSION['username'] = $user->username;
     $_SESSION['valid'] = true;
     $_SESSION['status'] = $user->status;
-    header( "location: https://$host$uri/index.php");
+    header( "location: http://$host$uri/index.php");
   }
   else{
     $stm = "Incorrect username or password";

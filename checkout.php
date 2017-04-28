@@ -19,7 +19,7 @@ include "templates/jumbotron.php";
 		clear_cart();
 		//header('Location: cart.php');
 		echo '<h2 align="center">Thanks for Shopping With Us!</h2>';
-		echo '<p align="center"><a href="products.php">Back To Shopping</a></p>';
+		echo '<p align="center"><a href="food.php">Back To Shopping</a></p>';
 		include 'templates/footer.php';
 		die();
 	}
@@ -36,7 +36,7 @@ function total (){
 	$row = $_SESSION['array'];
 
 	foreach ($row as $ing){
-		$total += $_SESSION['items'][$ing->id]['Total'];
+		$total += $_SESSION['items'][$ing->name]['Total'];
 	}
 
 	return $total;

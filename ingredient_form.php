@@ -24,7 +24,7 @@ if(isset($_GET['action']) and isset($_SESSION['status']) and $_SESSION['status']
       $db->deleteIngredient($ingredient);
       deleteIngredientFromFile($ingredient);
 
-      header('location: products.php');
+      header('location: food.php');
     }
   }
 
