@@ -43,7 +43,7 @@ function getInfo(baseURL,ing){
 }
 
 function getImage(baseURL, ing){
-    jQuery.post(lst[j].baseURL + "ajax_ingrimage.php?ing="+ing, function(data, status) {
+    jQuery.post(baseURL + "ajax_ingrimage.php?ing="+ing, function(data, status) {
         jQuery('.product_image').attr('src', 'data:image/png;base64,' + data);
     });
 }
