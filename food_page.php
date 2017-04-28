@@ -29,8 +29,8 @@ if (isset($_SESSION['status'])){
   if($_SESSION['status']=='Admin'){
     echo
       '<div>
-        <a href="ingredient_form.php?action=update&id='.$productID.'" class = "btn bth-default btn-sm">Click here to edit ingredient. <span class ="glyphicon glyphicon-pencil"></span></a>
-        <a href="ingredient_form.php?action=delete&id='.$productID.'" class = "btn bth-default btn-sm">Click here to delete ingredient. <span class ="glyphicon glyphicon-minus"></span></a><br>
+        <a href="templates/forms/ingredient_form.php?action=update&id='.$productID.'" class = "btn bth-default btn-sm">Click here to edit ingredient. <span class ="glyphicon glyphicon-pencil"></span></a>
+        <a href="templates/forms/ingredient_form.php?action=delete&id='.$productID.'" class = "btn bth-default btn-sm">Click here to delete ingredient. <span class ="glyphicon glyphicon-minus"></span></a><br>
         </div>';
   }
 }
@@ -44,7 +44,7 @@ if (isset($_SESSION['status'])){
       <span class =""><a href="#reviewList"><?php// echo $reviewCount;?> Reviews</a></span>
 
  <?php if (isset($_SESSION['username']) and $_SESSION['username']!="Guest"): //adds a cart option if user is signed in ?>
-	  <h4><a href="cart.php<?php echo "?action=cart&id=$productID";?>">Add to Cart</a></h4>
+	  <h4><a href="cart.php<?php echo "?action=cart&name=$ing";?>">Add to Cart</a></h4>
 	  <?php endif;?>
       $<span class="price"></span> per <span class = "unit"></span>
     </div>

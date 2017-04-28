@@ -84,8 +84,8 @@ endif;
 
 
 <?php
-if (isset($_GET['id'])):
-	$id = $_GET['id'];
+if (isset($_GET['name'])):
+	$name = strip_tags($_GET['name']);
 	if (!isset($_SESSION['array'])):
 		$row = array(); //stores ingredients in cart
 		$row[] = $dbh->getIngredientbyID($id);
