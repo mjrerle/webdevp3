@@ -11,6 +11,7 @@ include "templates/jumbotron.php";
       </div>
     </div>
   </div>
+  <div id="debug"></div>
 </div>
 
 <?php include "templates/footer.php";?>

@@ -24,7 +24,7 @@ function getStatus(lst){
     jQuery.post(url,function(data,status){
             if(typeof data.status !== undefined){
               if(data.status == "open"){
-                getIngs(lst.baseURL);
+                getIngs(lst.baseURL, lst.nameShort);
               }
             }
     })
@@ -34,62 +34,52 @@ function getStatus(lst){
 
 
 var ingredients=[];
-function getIngs(baseurl){
+function getIngs(baseurl,nameShort){
   var url = baseurl + "ajax_listing.php";
   if(url != "ajax_listing.php"){
     $.post(url,function(data,status){
       for(var j=0;j<data.length;j++){
 
         var x = {name: data[j].name, short: data[j].short, unit: data[j].unit, cost: data[j].cost};
-        if(!uniq(ingredients,x)){
           ingredients.push(x);
-        }
 
       }
-        fillData(ingredients,baseurl);
+        fillData(ingredients,baseurl,nameShort);
     });
   }
 }
 
-function uniq(ings, u){
-  var b = false;
-  var j = u.name;
-  for(var t in ings){
-    if(j == ings[t].name){
-      b = true;
-    }
-  }
-  return b;
-}
+
 
 var z =0;
-function fillData(ings,base){
+function fillData(ings,base,nameShort){
 	var details = "";
 	var len = ings.length;
 
 	for (j = z; j < len; j++) {
     var y = ings[j];
-  //  $("#debug").append(len + " "+y.name + " "+base+"<br>");
+  $("#debug").append(len + " "+y.name + " "+base+" "+nameShort+"<br>");
     details = '<div class = "col-sm-3 col-md-3 col-xs-3 product-listing">';
     details += '<div class="thumbnail">';
     details += "<a href=\"food_page.php?ing="+y.name+"\">";
-    details += "<img id = \"_"+y.name+"\" src = \"\" alt = \"thumbnail\">";
+    details += "<img id = \""+nameShort+"_"+y.name+"\" src = \"\" alt = \"thumbnail\">";
     details += "</a>";
     details += "<div class= \"caption\">";
     details += "<h4 class = \"pull-right\">$"+y.cost+" per "+y.unit +"</h4>";
-    details += "<h4><a href=\"food_page.php?ing="+y.name+"\">"+y.name+"</a></h4>";
+    details += "<h4><a href=\"food_page.php?ing="+y.name+"&team="+nameShort+"\">"+y.name+"</a></h4>";
+    details += "<p>Site: <a href=\""+base+"\">"+base+"</a></p>";
     details += "<p>"+y.short+"</p>";
     details += "</div></div></div>";
-    getImage(y,base);
+    getImage(y,base,nameShort);
     $("#dis").append(details);
     z++;
   }
 }
 
-function getImage(ing,base){
+function getImage(ing,base,nameShort){
   var url = base + "ajax_ingrimage.php";
   $.get(url+"?ing="+ing.name,function(data){
-     $("#_"+ing.name).attr('src','data:image/jpeg;base64,'+data);
+     $("#"+nameShort+"_"+ing.name).attr('src','data:image/jpeg;base64,'+data);
 
   }).fail(function(){
   });
