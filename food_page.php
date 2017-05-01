@@ -21,7 +21,7 @@ include 'templates/jumbotron.php';
 
     <div class="col-md-3" id = "productImgCol">
 
-      <img id = "product-image" src = "" alt="product_image" style="">
+      <img id = "product_image" src = "" alt="product_image" style="height:300px;width:300px;">
     </div>
     <div class = "col-md-3" id="productDetailsCol">
 <?php
