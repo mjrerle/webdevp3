@@ -45,7 +45,7 @@ function getInfo(baseURL,ing){
 
 function getImage(baseURL, ing){
     jQuery.get(baseURL + "ajax_ingrimage.php?ing="+ing, function(data, status) {
-        jQuery('#product_image').attr('src', 'data:image/jpeg;base64,' + data);
+        jQuery('#product_image').attr('src', 'data:image/jpg;base64,' + data);
     }).fail(function(){
     });
 }

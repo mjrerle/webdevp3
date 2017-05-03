@@ -65,7 +65,7 @@ function fillData(ings,base,nameShort){
       details = '<div class = "col-sm-3 col-md-3 col-xs-3 product-listing">';
       details += '<div class="thumbnail">';
       details += "<a href=\"food_page.php?ing="+y.name+"&team="+nameShort+"\">";
-      details += "<img id = \""+nameShort+"_"+y.name+"\" src = \"\" alt = \"thumbnail\" style = \"height:200px;width:200px;\">";
+      details += "<img id = \""+nameShort+"_"+y.name.replace(/ /g,'')+"\" src = \"\" alt = \"thumbnail\" style = \"height:200px;width:200px;\">";
       details += "</a>";
       details += "<div class= \"caption\">";
       details += "<h4 class = \"pull-right\">$"+y.cost+" per "+y.unit +"</h4>";
@@ -82,8 +82,9 @@ function fillData(ings,base,nameShort){
 
 function getImage(ing,base,nameShort){
   if(ing.name!=""){
+    var str =ing.name.replace(/\s/g,'');
     $.get(base+"ajax_ingrimage.php?ing="+ing.name,function(data){
-      $("#"+nameShort+"_"+ing.name).attr('src','data:image/jpeg;base64,'+data);
+      $("#"+nameShort+"_"+str).attr('src','data:image/jpg;base64,'+data);
 
     }).fail(function(data,status){
       $("#debug").html(status);
