@@ -69,16 +69,15 @@ function fillData(ings,base,nameShort){
     details += "<p>Site: <a href=\""+base+"\">"+base+"</a></p>";
     details += "<p>"+y.short+"</p>";
     details += "</div></div></div>";
-    getImage(y,base,nameShort);
+    getImage(y.name,base,nameShort);
     $("#dis").append(details);
     z++;
   }
 }
 
 function getImage(ing,base,nameShort){
-  var url = base + "ajax_ingrimage.php";
-  $.get(url+"?ing="+ing.name,function(data){
-     $("#"+nameShort+"_"+ing.name).attr('src','data:image/jpeg;base64,'+data);
+  $.get(base+"ajax_ingrimage.php?ing="+ing,function(data){
+     $("#"+nameShort+"_"+ing).attr('src','data:image/jpeg;base64,'+data);
 
   }).fail(function(){
   });
