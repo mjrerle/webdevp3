@@ -64,50 +64,28 @@ function fillData(ings,base,nameShort,team){
       details = '<div class = "col-sm-3 col-md-3 col-xs-3 product-listing">';
       details += '<div class="thumbnail">';
       details += "<a href=\"food_page.php?ing="+y.name+"&team="+nameShort+"\">";
-      details += "<img id = \""+nameShort+"_"+y.name.replace(/ /g,'')+"\" src = \"\" alt = \"thumbnail\" style = \"height:200px;width:200px;\">";
+      details += "<img id = \""+team+"_"+y.name.replace(/ /g,'')+"\" src = \"\" alt = \"thumbnail\" style = \"height:200px;width:200px;\">";
       details += "</a>";
       details += "<div class= \"caption\">";
       details += "<h4 class = \"pull-right\">$"+y.cost+" per "+y.unit +"</h4>";
       details += "<h4><a href=\"food_page.php?ing="+y.name+"&team="+nameShort+"\">"+y.name+"</a></h4>";
-      details += "<p>Site: <a href=\""+base+"\">"+base+"</a></p>";
+      details += "<p>Site: <a href=\""+base+"\">"+nameShort+"</a></p>";
       details += "<p>"+y.short+"</p>";
       details += "</div></div></div>";
-      getImage(y,base,nameShort);
+      getImage(y,base,team);
       $("#dis").append(details);
       z++;
     }
   }
 }
 
-function getImage(ing,base,nameShort){
+function getImage(ing,base,team){
   if(ing.name!=""){
     var str =ing.name.replace(/\s/g,'');
-    $.get(base+"ajax_ingrimage.php?ing="+ing.name,function(data){
-      $("#"+nameShort+"_"+str).attr('src','data:image/jpg;base64,'+data);
-    details = '<div class = "col-sm-3 col-md-3 col-xs-3 product-listing">';
-    details += '<div class="thumbnail">';
-    details += "<a href=\"food_page.php?ing="+y.name+"&team="+nameShort+"\">";
-    details += "<img id = \""+team+"_"+y.name+"\" src = \"\" alt = \"thumbnail\" style = \"height:200px;width:200px;\">";
-    details += "</a>";
-    details += "<div class= \"caption\">";
-    details += "<h4 class = \"pull-right\">$"+y.cost+" per "+y.unit +"</h4>";
-    details += "<h4><a href=\"food_page.php?ing="+y.name+"&team="+nameShort+"\">"+y.name+"</a></h4>";
-    details += "<p>Site: <a href=\""+base+"\">"+nameShort+"</a></p>";
-    details += "<p id =\""+team+"p_"+y.name+"\">"+y.short+"</p>";
-    details += "</div></div></div>";
-    getImage(y.name,base,team);
-    $("#dis").append(details);
-    z++;
-  }
-}
-
-function getImage(ing,base,team){
-  $.get(base+"ajax_ingrimage.php?ing="+ing,function(data,status){
-     $("#"+team+"_"+ing).attr('src','data:image/jpeg;base64,'+data);
-
-
-  }).fail(function(){
-           $("#"+team+"_"+ing).attr('alt',"Failed to load image invalid URL");
-
+    $.get(base+"ajax_ingrimage.php?ing="+ing.name,function(data,status){
+      $("#"+team+"_"+str).attr('src','data:image/jpeg;base64,'+data);
+    }).fail(function(){
+      $("#"+team+"_"+str).attr('alt',"Failed to load image invalid URL");
   });
+  }
 }
