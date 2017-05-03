@@ -83,7 +83,7 @@ function getImage(ing,base,team){
     
 
   }).fail(function(){
-           $("#"+team+"p_"+ing).html("Failed to load image invalid URL");
+           $("#"+team+"_"+ing).attr('alt',"Failed to load image invalid URL");
 
   });
 }
