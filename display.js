@@ -60,7 +60,6 @@ function fillData(ings,base,nameShort,team){
 
 	for (j = z; j < len; j++) {
     var y = ings[j];
-<<<<<<< HEAD
     if((typeof y.name !== undefined)&&(y.name !='') && (y.name)){
       details = '<div class = "col-sm-3 col-md-3 col-xs-3 product-listing">';
       details += '<div class="thumbnail">';
@@ -85,7 +84,6 @@ function getImage(ing,base,nameShort){
     var str =ing.name.replace(/\s/g,'');
     $.get(base+"ajax_ingrimage.php?ing="+ing.name,function(data){
       $("#"+nameShort+"_"+str).attr('src','data:image/jpg;base64,'+data);
-=======
     details = '<div class = "col-sm-3 col-md-3 col-xs-3 product-listing">';
     details += '<div class="thumbnail">';
     details += "<a href=\"food_page.php?ing="+y.name+"&team="+nameShort+"\">";
@@ -106,8 +104,7 @@ function getImage(ing,base,nameShort){
 function getImage(ing,base,team){
   $.get(base+"ajax_ingrimage.php?ing="+ing,function(data,status){
      $("#"+team+"_"+ing).attr('src','data:image/jpeg;base64,'+data);
-    
->>>>>>> 0c91f7584f1fa026c6e280c662cb8d95ddc235c9
+
 
   }).fail(function(){
            $("#"+team+"_"+ing).attr('alt',"Failed to load image invalid URL");
