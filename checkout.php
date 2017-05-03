@@ -6,13 +6,16 @@ include "templates/jumbotron.php";
 ?>
 
 <?php
+
 	if (isset($_POST['check'])){
 		$users = User::readUsers(); //get users from users.csv
 		foreach ($users as $u){
 			if ($u->status == 'Admin'){
-				$to = $u->email;
-				$subject = 'Customer Purchase';
-				$message = 'Customer Purchased some items from the store!';
+        $to = $u->email;
+        $t=0;
+        if(!empty($_GET['total'])) $t = doubleval($_GET['total']);
+				$subject = 'CT310 Empo Team -- Customer Purchase: $'.number_format((float)$t,2,'.','').' has been billed to your account.';
+				$message = 'This is an email from www.cs.colostate.edu/~mjrerle/p3/ and is not an actual bill. This is for testing purposes only.';
 				mail($to,$subject,$message);
 			}
 		}
@@ -27,28 +30,28 @@ include "templates/jumbotron.php";
 	function clear_cart(){
 		unset($_SESSION['array']);
 		unset($_SESSION['items']);
-	}
-?>
-
-<?php
-function total (){
-	$total = 0.0;
-	$row = $_SESSION['array'];
-
-	foreach ($row as $ing){
-		$total += $_SESSION['items'][$ing->name]['Total'];
-	}
-
-	return $total;
-}
-?>
-
-<div class="checkout">
-	<h1 align="center">Your Total is $<?php echo number_format((float)total(), 2 , '.' , '');?></h1>
+  }
+  $total;
+  $str = '<h1 align="center">Your Total is $0.00</h1>
 	<h2 align="center">Are You Sure You Want To Checkout?</h2>
 	<form action="#" method="post">
 		<input type="submit" name="check" value="Checkout">
 	</form>
-</div>
+</div>';
+  if(!empty($_GET['total'])){
+   $total = doubleval($_GET['total']);
+$str = '<div class="checkout">
+	<h1 align="center">Your Total is $'. number_format((float)$total, 2 , '.' , '').'</h1>
+	<h2 align="center">Are You Sure You Want To Checkout?</h2>
+	<form action="#" method="post">
+		<input type="submit" name="check" value="Checkout">
+	</form>
+</div>';
+    echo $str;
+  }
+  else{
+    echo $str;
+  }
+?>
 
 <?php require 'templates/footer.php';?>

@@ -125,7 +125,6 @@ function getIngredientbyName($id){
 		$query_term = SQLite3::escapeString ( $query_term );
 		$sql = "SELECT COUNT (*) FROM ingredient
 				WHERE i_name LIKE '%$query_term%' ";
-		// echo "<p>$sql</p>";
 		$result = $this->query ( $sql );
 		return $result->fetchColumn ();
 	}
@@ -135,7 +134,6 @@ function getIngredientbyName($id){
           WHERE (i_name LIKE '%$query_term%')";
 		$result = $this->query ( $sql );
 		if ($result === FALSE) {
-			echo $sql;
 			echo '<pre class="bg-danger">';
 			print_r ( $this->errorInfo () );
 			echo '</pre>';
@@ -155,7 +153,6 @@ function getIngredientbyName($id){
 		$result = $this->query ( $sql );
 		if ($result === FALSE) {
 			// Only doing this for class. Would never do this in real life
-			echo $sql;
 			echo '<pre class="bg-danger">';
 			print_r ( $this->errorInfo () );
 			echo '</pre>';

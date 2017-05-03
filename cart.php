@@ -1,11 +1,25 @@
 <?php
 require_once "templates/page_setup.php";
+$_final;
 $page_name = "cart";
 include "templates/header.php";
 include "templates/jumbotron.php";
 ?>
 
 <?php
+class cart{
+  public $name;
+  public $cost;
+  public $teamURL;
+  public function __construct($name="",$cost=0,$teamURL=""){
+    $this->name=$name;
+    $this->cost=$cost;
+    $this->teamURL=$teamURL;
+  }
+}
+?>
+<?php
+
 function total (){
 	$total = 0.0;
 	$row = $_SESSION['array'];
@@ -13,7 +27,6 @@ function total (){
 	foreach ($row as $ing){
 		$total += $_SESSION['items'][$ing->name]['Total'];
 	}
-
 	return $total;
 }
 ?>
@@ -85,18 +98,7 @@ if (!isset($_SESSION['array']) and !isset($_GET['name'])):
 endif;
 ?>
 
-<?php
-class cart{
-  public $name;
-  public $cost;
-  public $teamURL;
-  public function __construct($name="",$cost=0,$teamURL=""){
-    $this->name=$name;
-    $this->cost=$cost;
-    $this->teamURL=$teamURL;
-  }
-}
-?>
+
 
 <?php
 if (isset($_GET['name'])):
@@ -128,9 +130,9 @@ endif;
 
 <div class="cart">
 	<h2 align="center">My Cart</h2>
-	<?php view_cart(); ?>
-	<h3 align="center">Your Total is: $<?php echo number_format((float)total(), 2 , '.' , '');?></h3>
-	<p align="center"><a href="checkout.php">Checkout</a></p>
+	<?php view_cart();  ?>
+	<h3 align="center">Your Total is: $<?php $_final = total(); echo number_format((float)$_final, 2 , '.' , '');?></h3>
+    <p align="center"><a href="checkout.php?total=<?php echo $_final;?>">Checkout</a></p>
 	<p align="center"><a href="products.php">Continue Shopping</a></p>
 </div>
 
