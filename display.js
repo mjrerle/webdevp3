@@ -39,12 +39,15 @@ function getIngs(baseurl,nameShort){
   if(url != "ajax_listing.php"){
     $.post(url,function(data,status){
       for(var j=0;j<data.length;j++){
-
-        var x = {name: data[j].name, short: data[j].short, unit: data[j].unit, cost: data[j].cost};
+        if((typeof data[j].name !== 'undefined') &&(data[j].name.length !=0)&&(data[j].name !== undefined)&& (data[j].name != '')){
+          var x = {name: data[j].name, short: data[j].short, unit: data[j].unit, cost: data[j].cost};
           ingredients.push(x);
-
+        }
       }
         fillData(ingredients,baseurl,nameShort);
+    })
+    .fail(function(data,status){
+
     });
   }
 }
@@ -58,28 +61,33 @@ function fillData(ings,base,nameShort){
 
 	for (j = z; j < len; j++) {
     var y = ings[j];
-    details = '<div class = "col-sm-3 col-md-3 col-xs-3 product-listing">';
-    details += '<div class="thumbnail">';
-    details += "<a href=\"food_page.php?ing="+y.name+"&team="+nameShort+"\">";
-    details += "<img id = \""+nameShort+"_"+y.name+"\" src = \"\" alt = \"thumbnail\" style = \"height:200px;width:200px;\">";
-    details += "</a>";
-    details += "<div class= \"caption\">";
-    details += "<h4 class = \"pull-right\">$"+y.cost+" per "+y.unit +"</h4>";
-    details += "<h4><a href=\"food_page.php?ing="+y.name+"&team="+nameShort+"\">"+y.name+"</a></h4>";
-    details += "<p>Site: <a href=\""+base+"\">"+base+"</a></p>";
-    details += "<p>"+y.short+"</p>";
-    details += "</div></div></div>";
-    getImage(y.name,base,nameShort);
-    $("#dis").append(details);
-    z++;
+    if((typeof y.name !== undefined)&&(y.name !='') && (y.name)){
+      details = '<div class = "col-sm-3 col-md-3 col-xs-3 product-listing">';
+      details += '<div class="thumbnail">';
+      details += "<a href=\"food_page.php?ing="+y.name+"&team="+nameShort+"\">";
+      details += "<img id = \""+nameShort+"_"+y.name+"\" src = \"\" alt = \"thumbnail\" style = \"height:200px;width:200px;\">";
+      details += "</a>";
+      details += "<div class= \"caption\">";
+      details += "<h4 class = \"pull-right\">$"+y.cost+" per "+y.unit +"</h4>";
+      details += "<h4><a href=\"food_page.php?ing="+y.name+"&team="+nameShort+"\">"+y.name+"</a></h4>";
+      details += "<p>Site: <a href=\""+base+"\">"+base+"</a></p>";
+      details += "<p>"+y.short+"</p>";
+      details += "</div></div></div>";
+      getImage(y,base,nameShort);
+      $("#dis").append(details);
+      z++;
+    }
   }
 }
 
 function getImage(ing,base,nameShort){
-  $.get(base+"ajax_ingrimage.php?ing="+ing,function(data){
-     $("#"+nameShort+"_"+ing).attr('src','data:image/jpeg;base64,'+data);
+  if(ing.name!=""){
+    $.get(base+"ajax_ingrimage.php?ing="+ing.name,function(data){
+      $("#"+nameShort+"_"+ing.name).attr('src','data:image/jpeg;base64,'+data);
 
-  }).fail(function(){
-  });
+    }).fail(function(data,status){
+      $("#debug").html(status);
+    });
+  }
 }
 
